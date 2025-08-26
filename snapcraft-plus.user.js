@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snapcraft+
 // @namespace    http://tampermonkey.net/
-// @version      25.08.2
+// @version      25.08.3
 // @description  Snapcraft.io, but better!
 // @author       Lauren Brock
 // @source       https://github.com/atomcult/snapcraft-plus
