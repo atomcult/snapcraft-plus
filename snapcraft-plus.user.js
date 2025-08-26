@@ -53,10 +53,10 @@ async function addDownloadsToDashboard() {
     const dlSvg = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg height='800px' width='800px' version='1.1' id='图层_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 40 40' enable-background='new 0 0 40 40' xml:space='preserve'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cpath fill='%23231815' d='M20,22c-0.1,0-0.3,0-0.4-0.1l-3-3c-0.2-0.2-0.2-0.5,0-0.7s0.5-0.2,0.7,0l2.6,2.6l2.6-2.6 c0.2-0.2,0.5-0.2,0.7,0s0.2,0.5,0,0.7l-3,3C20.3,22,20.1,22,20,22z'/%3E%3C/g%3E%3Cg%3E%3Cpath fill='%23231815' d='M20,21.5c-0.3,0-0.5-0.2-0.5-0.5v-8c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v8 C20.5,21.3,20.3,21.5,20,21.5z'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cpath fill='%23231815' d='M25,27.5H15c-1.4,0-2.5-1.1-2.5-2.5v-2c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v2c0,0.8,0.7,1.5,1.5,1.5 h10c0.8,0,1.5-0.7,1.5-1.5v-2c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v2C27.5,26.4,26.4,27.5,25,27.5z'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E";
     const assertSvg = "data:image/svg+xml,%3C%3Fxml version='1.0' %3F%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg width='800px' height='800px' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23101010;%7D%3C/style%3E%3C/defs%3E%3Ctitle/%3E%3Cg id='xxx-file'%3E%3Cpath class='cls-1' d='M325,105H250a5,5,0,0,1-5-5V25a5,5,0,0,1,10,0V95h70a5,5,0,0,1,0,10Z'/%3E%3Cpath class='cls-1' d='M300,380H100a30,30,0,0,1-30-30V50a30,30,0,0,1,30-30H250a5,5,0,0,1,3.54,1.46l75,75A5,5,0,0,1,330,100V350A30,30,0,0,1,300,380ZM100,30A20,20,0,0,0,80,50V350a20,20,0,0,0,20,20H300a20,20,0,0,0,20-20V102.07L247.93,30Z'/%3E%3Cpath class='cls-1' d='M275,180H125a5,5,0,0,1,0-10H275a5,5,0,0,1,0,10Z'/%3E%3Cpath class='cls-1' d='M275,230H125a5,5,0,0,1,0-10H275a5,5,0,0,1,0,10Z'/%3E%3Cpath class='cls-1' d='M275,280H125a5,5,0,0,1,0-10H275a5,5,0,0,1,0,10Z'/%3E%3Cpath class='cls-1' d='M200,330H125a5,5,0,0,1,0-10h75a5,5,0,0,1,0,10Z'/%3E%3C/g%3E%3C/svg%3E";
 
-    const snapNameNode = document.getElementsByClassName("p-media-object__content")[0]
-    const snapName = snapNameNode.textContent.trim();
+    const snapNameNode = document.getElementsByClassName("p-media-object__content")
+    if (snapNameNode === null || snapNameNode.length === 0) return;
 
-    if (snapName === null) return;
+    const snapName = snapNameNode[0].textContent.trim();
 
     var assertDecSvgNode = document.createElement("img");
     assertDecSvgNode.src = assertSvg;
@@ -149,20 +149,24 @@ async function openRevisionAssert(snapName, revision) {
 }
 
 async function openDeclarationAssert(snapName) {
-    var snapID = document.querySelectorAll("[data-test=spec-list-snap-id]")[0].textContent;
+    var snapIDNodes = document.querySelectorAll("[data-test=spec-list-snap-id]")
 
-    if (snapID === null) {
-        snapID = await fetch("/snaps/" + snapName)
-            .then(response => {
-            return response.text()
-        })
-            .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            const idNode = doc.querySelectorAll("[data-test=spec-list-snap-id]")[0];
-            return idNode.textContent;
-        });
-    }
+    if (snapIDNodes !== null && snapIDNodes.length !== 0) {
+        var snapID = snapIDNodes[0].textContent.trim();
+        window.open("https://api.snapcraft.io/v2/assertions/snap-declaration/16/" + snapID);
+    };
+
+
+    snapID = await fetch("/snaps/" + snapName)
+        .then(response => {
+        return response.text()
+    })
+        .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const idNode = doc.querySelectorAll("[data-test=spec-list-snap-id]")[0];
+        return idNode.textContent;
+    });
 
     window.open("https://api.snapcraft.io/v2/assertions/snap-declaration/16/" + snapID);
 }
