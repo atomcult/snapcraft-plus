@@ -4,6 +4,7 @@
 // @version      25.08.2
 // @description  Snapcraft.io, but better!
 // @author       Lauren Brock
+// @source       https://github.com/atomcult/snapcraft-plus
 // @match        https://snapcraft.io/admin/*/snaps
 // @match        https://dashboard.snapcraft.io/snaps/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=snapcraft.io
