@@ -17,7 +17,6 @@
     else if (location.hostname === "snapcraft.io") {
         replaceSnapNamesWithLinks();
     }
-
 })();
 
 function replaceSnapNamesWithLinks() {
@@ -44,8 +43,6 @@ function replaceSnapNamesWithLinks() {
         snap.innerHTML = `<a href="https://dashboard.snapcraft.io/snaps/${snapName}/">${snapName}</a>`;
     }
 };
-
-
 
 async function addDownloadsToDashboard() {
     'use strict';
@@ -155,7 +152,6 @@ async function openDeclarationAssert(snapName) {
         var snapID = snapIDNodes[0].textContent.trim();
         window.open("https://api.snapcraft.io/v2/assertions/snap-declaration/16/" + snapID);
     };
-
 
     snapID = await fetch("/snaps/" + snapName)
         .then(response => {
