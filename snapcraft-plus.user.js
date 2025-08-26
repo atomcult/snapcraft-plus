@@ -153,6 +153,7 @@ async function openDeclarationAssert(snapName) {
     if (snapIDNodes !== null && snapIDNodes.length !== 0) {
         var snapID = snapIDNodes[0].textContent.trim();
         window.open("https://api.snapcraft.io/v2/assertions/snap-declaration/16/" + snapID);
+        return;
     };
 
     snapID = await fetch("/snaps/" + snapName)
