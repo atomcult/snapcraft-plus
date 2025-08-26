@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Snapcraft+
 // @namespace    http://tampermonkey.net/
-// @version      25.08
+// @version      25.08-1
 // @description  Snapcraft.io, but better!
 // @author       Lauren Brock
 // @match        https://snapcraft.io/admin/*/snaps
